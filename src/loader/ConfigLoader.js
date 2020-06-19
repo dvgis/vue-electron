@@ -2,15 +2,14 @@
  * @Author: Caven
  * @Date: 2019-10-12 12:48:10
  * @Last Modified by: Caven
- * @Last Modified time: 2020-05-19 11:00:01
+ * @Last Modified time: 2020-06-19 16:18:45
  */
 
 const JSON_TEMP = {
   url: {
     server: '',
     resource: ''
-  },
-  maps: []
+  }
 }
 
 class ConfigLoader {
@@ -18,12 +17,11 @@ class ConfigLoader {
     if (process.env.IS_ELECTRON) {
       const HOME_PATH = process.env.HOME || process.env.USERPROFILE
       const fs = require('fs-extra')
-      fs.exists(`${HOME_PATH}/.dc-conf`, exists => {
-        !exists && fs.mkdirSync(`${HOME_PATH}/.dc-conf`)
-        !exists &&
-          fs.writeJsonSync(`${HOME_PATH}/.dc-conf/config.json`, JSON_TEMP)
-        exists &&
-          (global.Config = fs.readJsonSync(`${HOME_PATH}/.dc-conf/config.json`))
+      const folder = `${HOME_PATH}/.vue-conf`
+      fs.exists(folder, exists => {
+        !exists && fs.mkdirSync(folder)
+        !exists && fs.writeJsonSync(`${folder}/config.json`, JSON_TEMP)
+        exists && (global.Config = fs.readJsonSync(`${folder}/config.json`))
       })
     } else {
       global.Http.get('config/config.json')

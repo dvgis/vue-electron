@@ -1,20 +1,15 @@
 <template>
   <div class="index">
-    <viewer @on-viewer-completed="viewerCompletedHandler"></viewer>
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import ViewerApi from '@/api/ViewerApi'
 export default {
   name: 'Index',
   components: {},
-  methods: {
-    viewerCompletedHandler(viewer) {
-      global.viewerApi = new ViewerApi()
-      global.viewerApi.viewer = viewer
-    }
-  }
+  methods: {}
 }
 </script>
 
@@ -23,5 +18,15 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  padding: 30px 0;
+  text-align: center;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

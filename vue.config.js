@@ -2,15 +2,10 @@
  * @Author: Caven
  * @Date: 2018-12-15 00:33:19
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-17 17:27:52
+ * @Last Modified time: 2020-06-19 16:13:33
  */
 'use strict'
 const path = require('path')
-const fs = require('fs-extra')
-
-const CopywebpackPlugin = require('copy-webpack-plugin')
-const dvgis = './node_modules/@dvgis'
-
 let resolve = dir => {
   return path.resolve(__dirname, dir)
 }
@@ -18,20 +13,10 @@ let resolve = dir => {
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   productionSourceMap: false,
-  configureWebpack: {
-    module: {
-      unknownContextCritical: false
-    },
-    performance: {
-      hints: false
-    }
-  },
   chainWebpack: config => {
     config.resolve.extensions
       .add('.js')
       .add('.vue')
-      .end()
-      .alias.set('dvgis', resolve(dvgis))
       .end()
 
     config.module
@@ -72,43 +57,10 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-
-    config.plugin('copy').use(CopywebpackPlugin, [
-      [
-        {
-          from: path.join(__dirname, 'public'),
-          to: path.join(__dirname, 'dist'),
-          ignore: ['index.html']
-        },
-        {
-          from: path.join(dvgis, 'dc-sdk/dist/resources'),
-          to: path.join(__dirname, 'dist', 'libs/dc-sdk/resources')
-        }
-      ]
-    ])
   },
   pluginOptions: {
     electronBuilder: {
-      chainWebpackMainProcess: config => {
-        let outputDir = 'dist_electron/bundled'
-        fs.removeSync(path.join(__dirname, outputDir, 'Assets'))
-        fs.removeSync(path.join(__dirname, outputDir, 'Widgets'))
-        fs.removeSync(path.join(__dirname, outputDir, 'Workers'))
-        fs.removeSync(path.join(__dirname, outputDir, 'ThirdParty'))
-        config.plugin('copy').use(CopywebpackPlugin, [
-          [
-            {
-              from: path.join(__dirname, 'public'),
-              to: path.join(__dirname, outputDir),
-              ignore: ['index.html']
-            },
-            {
-              from: path.join(dvgis, 'dc-sdk/dist/resources'),
-              to: path.join(__dirname, outputDir, 'libs/dc-sdk/resources')
-            }
-          ]
-        ])
-      },
+      chainWebpackMainProcess: config => {},
       chainWebpackRendererProcess: config => {
         config.plugin('define').tap(args => {
           const env = args[0]['process.env']
