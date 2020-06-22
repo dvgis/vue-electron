@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, Menu } from 'electron'
 import {
   createProtocol
   /* installVueDevtools */
@@ -17,6 +17,9 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 function createWindow() {
+  // hide Menu
+  Menu.setApplicationMenu(null)
+
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
