@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2019-10-12 12:48:10
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-19 16:18:45
+ * @Last Modified time: 2020-07-02 12:45:49
  */
 
 const JSON_TEMP = {
@@ -26,7 +26,7 @@ class ConfigLoader {
     } else {
       global.Http.get('config/config.json')
         .then(res => {
-          global.Config = res.data.data
+          global.Config = res.data
           Promise.resolve()
         })
         .catch(e => {
