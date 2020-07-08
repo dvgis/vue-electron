@@ -2,7 +2,7 @@
  * @Author: Caven
  * @Date: 2018-12-15 00:33:19
  * @Last Modified by: Caven
- * @Last Modified time: 2020-06-19 16:13:33
+ * @Last Modified time: 2020-07-08 13:19:22
  */
 'use strict'
 const path = require('path')
@@ -60,6 +60,7 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
       chainWebpackMainProcess: config => {},
       chainWebpackRendererProcess: config => {
         config.plugin('define').tap(args => {
